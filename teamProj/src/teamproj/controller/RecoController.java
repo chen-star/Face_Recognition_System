@@ -37,6 +37,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.Objdetect;
 import org.opencv.videoio.VideoCapture;
+import teamproj.model.StudentCollection;
 import teamproj.view.AlertBox;
 import teamproj.view.InfoInput;
 
@@ -148,6 +149,7 @@ public class RecoController {
                         Mat frame = grabFrame();
                         // convert and show the frame
                         Image imageToShow = Utils.mat2Image(frame);
+                       
                         // show the grabbed image info
                         System.out.println("Width: " + imageToShow.getWidth());
                         System.out.println("Height: " + imageToShow.getHeight());
@@ -155,7 +157,11 @@ public class RecoController {
                         // after grap a photo, 先放一张image去test directory中
                         String testFile = "/Users/chenjiaxin/Desktop/cmu1/java/team/teamProj/src/teamproj/test_data/" + "img" + ".png";
                         Utils.storeImg(imageToShow, testFile);
-                        //System.out.println("store in test file ok");
+                        Image imageToShow1 = new Image("file:"+testFile, 240, 150, false, true);
+                        System.out.println("Width1: " + imageToShow1.getWidth());
+                        System.out.println("Height1: " + imageToShow1.getHeight());
+                        Utils.storeImg(imageToShow1, testFile);
+                        System.out.println("store in test file ok");
 
                         // 识别
                         int predicted = recog();
@@ -179,22 +185,37 @@ public class RecoController {
                                     InfoInput info = new InfoInput();
                                     ArrayList<String> arr;
                                     arr = info.showInput();
+
+                                    // for test
                                     System.out.println(arr.get(0));
 
+                                    StoreStudent ss = new StoreStudent();
+                                    
+                                    // get the number of students in the DB
+                                    int num = ss.getCount();
+                                    // the new person's label
+                                    int nextLabel = num + 1;
+                                    
+                                    // store the data into database
+                                    ss.store(arr, nextLabel);
+
                                     // write 1 image to photo directory
-                                    String photoFile = "/Users/chenjiaxin/Desktop/cmu1/java/team/teamProj/src/teamproj/photo/" + "2-Jiaxin_Chen_" + count + ".png";
-                                    Utils.storeImg(imageToShow, photoFile);
+                                    String photoFile = "/Users/chenjiaxin/Desktop/cmu1/java/team/teamProj/src/teamproj/photo/" + nextLabel + "-" + arr.get(0) + ".png";
+                                    Utils.storeImg(imageToShow1, photoFile);
 
                                     while (count <= 5) {
                                         // write 5 images to the training data directory
-                                        String trainFile = "/Users/chenjiaxin/Desktop/cmu1/java/team/teamProj/src/teamproj/training_data/" + "2-Jiaxin_Chen_" + count + ".png";
-                                        Utils.storeImg(imageToShow, trainFile);
+                                        String trainFile = "/Users/chenjiaxin/Desktop/cmu1/java/team/teamProj/src/teamproj/training_data/" + nextLabel + "-" + arr.get(0) + "_" + count + ".png";
+                                        Utils.storeImg(imageToShow1, trainFile);
                                         count++;
                                     }
+                                    
+                                    // store the data into database
+                                    ss.store(arr, nextLabel);
 
                                 }
                             });
-           
+
                         }
 
                         // update recognition frame
@@ -210,6 +231,7 @@ public class RecoController {
                         // show Student information
                         InfoDispatcher dispatcher = new InfoDispatcher();
                         ArrayList<String> sInfo = dispatcher.afterRecog(predicted);
+
                         // update student info text region
                         text.setText(sInfo.get(0));
                         // update student photo

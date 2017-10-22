@@ -30,9 +30,9 @@ public class StudentCollection {
      *
      * @return students arraylist
      */
-    public ArrayList<StudentInfo> getAllStudents() {
+    public ArrayList<StudentInfo> getAllStudents(int predictedLabel) {
         initializeDB();
-        return showStudents();
+        return showStudents(predictedLabel);
     }
     
     // init the database connection
@@ -51,9 +51,9 @@ public class StudentCollection {
     }
 
     // get all the students in database
-    private ArrayList<StudentInfo> showStudents() {
+    private ArrayList<StudentInfo> showStudents(int predictedLabel) {
         try {
-            String query = "select * from StudentInfo";
+            String query = "select * from StudentInfo where label = " + predictedLabel;
 
             ResultSet rset = stmt.executeQuery(query);
             
@@ -70,6 +70,7 @@ public class StudentCollection {
                 int slabel = rset.getInt(9);
                 StudentInfo s = new StudentInfo(sname, sid, sage, sprogram, sphoto, slastVisited, scount, sreason, slabel);
                 students.add(s);
+                System.out.println(s.getLabel());
             } else {
                 System.out.println("Not Found");
             }

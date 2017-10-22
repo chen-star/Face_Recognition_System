@@ -20,7 +20,7 @@ public class InfoDispatcher {
      */
     public ArrayList<String> afterRecog(int predictedLabel) {
         
-        ArrayList<StudentInfo> students = collection.getAllStudents();
+        ArrayList<StudentInfo> students = collection.getAllStudents(predictedLabel);
         ArrayList<String> result = new ArrayList<>();
         //System.out.println("get students array ok");
         boolean found = false;
@@ -33,15 +33,6 @@ public class InfoDispatcher {
                 //System.out.println("result1: "+result.get(1));
                 return result;
             }
-        }
-        // 如果数据库里没有这个学生
-        // 要新加入这个学生
-        if (!found) {
-            //
-//            StudentInfo s = new StudentInfo("name", "andrewId", 22, "program", "photo", predictedLabel);
-//            students.add(s);
-//            display(s);
-//                    
         }
         return result;
     }
