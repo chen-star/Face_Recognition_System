@@ -11,7 +11,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -37,7 +36,6 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.Objdetect;
 import org.opencv.videoio.VideoCapture;
-import teamproj.model.StudentCollection;
 import teamproj.view.AlertBox;
 import teamproj.view.InfoInput;
 
@@ -169,15 +167,15 @@ public class RecoController {
 
                         // 如果此学生不在数据库中
                         // store images into training directory and photo directory
-                        if (predicted < 0) {
+                        if (predicted <= 0) {
 
                             // a window to alert that this person is not in the database
-                            Platform.runLater(new Runnable() {
-                                public void run() {
-                                    AlertBox alert = new AlertBox();
-                                    alert.dis("Not Found Alert", "This person is not in the database, please input information!");
-                                }
-                            });
+//                            Platform.runLater(new Runnable() {
+//                                public void run() {
+//                                    AlertBox alert = new AlertBox();
+//                                    alert.dis("Not Found Alert", "This person is not in the database, please input information!");
+//                                }
+//                            });
 
                             // a window to input information
                             Platform.runLater(new Runnable() {
@@ -213,6 +211,14 @@ public class RecoController {
                                     // store the data into database
                                     ss.store(arr, nextLabel);
 
+                                }
+                            });
+                            
+                            // a window to alert that this person is not in the database
+                            Platform.runLater(new Runnable() {
+                                public void run() {
+                                    AlertBox alert = new AlertBox();
+                                    alert.dis("Not Found Alert", "This person is not in the database, please input information!");
                                 }
                             });
 
@@ -422,7 +428,9 @@ public class RecoController {
             counter++;
         }
 
-        opencv_face.FaceRecognizer faceRecognizer = createFisherFaceRecognizer();
+        opencv_face.FaceRecognizer faceRecognizer = createFisherFaceRecognizer(5, 2000);
+        double threshold = faceRecognizer.getThreshold();
+        System.out.println(threshold);
 
         // train the face recogniton model
         faceRecognizer.train(images, labels);
