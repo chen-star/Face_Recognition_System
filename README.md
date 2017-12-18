@@ -6,7 +6,7 @@ The aim of this open-ended project is to simulate a biometric user identificatio
 The basic specification for all students is to develop a JavaFX GUI based desktop application that uses a video-camera to detect a person’s face, identify the person and provide useful information and analytics about this person (to the users of the system).
 
 ## Demo
-![img1](https://github.com/chen-star/Face_Recognition/raw/master/img/1.JPG)
+![img1](https://github.com/chen-star/Face_Recognition_System/raw/master/img/1.JPG)
 ![img2]()
 ![img3]()
 
