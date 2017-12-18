@@ -7,8 +7,8 @@ The basic specification for all students is to develop a JavaFX GUI based deskto
 
 ## Demo
 ![img1](https://github.com/chen-star/Face_Recognition_System/raw/master/img/1.JPG)
-![img2]()
-![img3]()
+![img2](https://github.com/chen-star/Face_Recognition_System/raw/master/img/2.JPG)
+![img3](https://github.com/chen-star/Face_Recognition_System/raw/master/img/3.JPG)
 
 # Main Features
 1. Using **OpenCV** to support face detection and recognition
