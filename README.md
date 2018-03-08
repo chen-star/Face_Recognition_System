@@ -7,7 +7,7 @@ The basic specification for all students is to develop a JavaFX GUI based deskto
 
 ## Demo
 ![img1](https://github.com/chen-star/Face_Recognition_System/raw/master/img/1.JPG)
-![img2](https://github.com/chen-star/Face_Recognition_System/raw/master/img/2.JPG)
+![img2](https://github.com/chen-star/Face_Recognition_System/raw/master/img/2.png)
 ![img3](https://github.com/chen-star/Face_Recognition_System/raw/master/img/3.JPG)
 
 # Main Features
